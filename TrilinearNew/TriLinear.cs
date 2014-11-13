@@ -20,7 +20,7 @@
             for (int i = 0; i < inputMatrix.Length; i++)
             {
                 string inputName = inputMatrix[i];
-                string text = File.ReadAllText(@"..\..\..\Input\" + inputName);
+                string text = File.ReadAllText(@"..\..\Input\" + inputName);
 
                 LinearInterpolation(text, inputName);
             }
@@ -111,7 +111,7 @@
             }
 
             //PrintInterpolatedValues(newFt, newMt, newDm, newXSs, inputName);
-            using (StreamWriter file = new StreamWriter(@"..\..\..\Output\Interpolated_" + inputName))
+            using (StreamWriter file = new StreamWriter(@"..\..\Output\Interpolated_" + inputName))
             {
                 int m = 1;
 
