@@ -48,61 +48,118 @@
 
             // New 2D array to store new - extrapolated values
             double[, ,] newXSs = new Double[5, 3, 13];
+            //double[, ,] newXSs = new Double[3, 3, 4];
             // new parameters' values
             double[] newFt = new double[5] { 0.470000E+03, 0.852500E+03, 0.123500E+04, 0.161750E+04, 0.200000E+04 };
+            //double[] newFt = new double[3] { 0.470000E+03, 0.852500E+03, 0.123500E+04 };
             double[] newMt = new double[3] { 0.470000E+03, 0.545000E+03, 0.620000E+03 };
             double[] newDm = new double[13] { 0.500000E+02, 0.760000E+02, 0.102000E+03, 0.128000E+03, 0.154000E+03, 0.207000E+03, 0.259000E+03,
                                   0.311000E+03, 0.363000E+03, 0.467500E+03, 0.572000E+03, 0.676000E+03, 0.885000E+03};
+            //double[] newDm = new double[4] { 0.500000E+02, 0.128000E+03, 0.676000E+03, 0.885000E+03 };
 
             int interpolationCounter = 0;
-            int x0, x1, y0, y1, z0, z1;
+            // indexes of the coordinates
+            int ix0, ix1, iy0, iy1, iz0, iz1;
+            // coordinates' values
+            double x0, x1, y0, y1, z0, z1, x2, y2, z2;
 
             for (int i = 0; i < newFt.Length; i++)
             {
-                // cycle on fT to find 2 points to interpolate inbetween
+                // process fT to find 2 points to interpolate inbetween
                 int[] outputCoeffArray = FindPointsToInterpolate(fT, newFt, i);
-                x0 = outputCoeffArray[0];
-                x1 = outputCoeffArray[1];
+                ix0 = outputCoeffArray[0];
+                ix1 = outputCoeffArray[1];
 
-                // cycle on Mt to find 2 points to interpolate inbetween
                 for (int j = 0; j < newMt.Length; j++)
                 {
+                    // process Mt to find 2 points to interpolate inbetween
                     outputCoeffArray = FindPointsToInterpolate(mT, newMt, j);
-                    y0 = outputCoeffArray[0];
-                    y1 = outputCoeffArray[1];
+                    iy0 = outputCoeffArray[0];
+                    iy1 = outputCoeffArray[1];
 
-                    // cycle on Dm to find 2 points to interpolate inbetween
                     for (int k = 0; k < newDm.Length; k++)
                     {
+                        // process Dm to find 2 points to interpolate inbetween
                         outputCoeffArray = FindPointsToInterpolate(Dm, newDm, k);
-                        z0 = outputCoeffArray[0];
-                        z1 = outputCoeffArray[1];
+                        iz0 = outputCoeffArray[0];
+                        iz1 = outputCoeffArray[1];
 
                         Console.WriteLine(" Interp. step {0}", interpolationCounter);
 
-                        // set the coordinates of the new interpolated value
-                        double fT_norm = CheckForZero(fT, newFt, x0, x1, i);
-                        double mT_norm = CheckForZero(mT, newMt, y0, y1, j);
-                        double dM_norm = CheckForZero(Dm, newDm, z0, z1, k);
+                        // points to interpolate from:
+                        x0 = fT[ix0];
+                        y0 = mT[iy0];
+                        z0 = Dm[iz0];
 
-                        // Interpolation block ....
-                        // first step of the 3-linear interpolation
-                        double f00 = xsValues[x0, y0, z0] * (1 - dM_norm) + xsValues[x1, y0, z0] * (dM_norm);
-                        double f10 = xsValues[x0, y1, z0] * (1 - dM_norm) + xsValues[x1, y1, z0] * (dM_norm);
-                        double f01 = xsValues[x0, y0, z1] * (1 - dM_norm) + xsValues[x1, y0, z1] * (dM_norm);
-                        double f11 = xsValues[x0, y1, z1] * (1 - dM_norm) + xsValues[x1, y1, z1] * (dM_norm);
+                        x1 = fT[ix1];
+                        y1 = mT[iy1];
+                        z1 = Dm[iz1];
 
-                        // second step of the 3-linear interpolation
-                        double f0 = f00 * (1 - mT_norm) + f10 * mT_norm;
-                        double f1 = f01 * (1 - mT_norm) + f11 * mT_norm;
+                        // current points:
+                        x2 = newFt[i];
+                        y2 = newMt[j];
+                        z2 = newDm[k];
 
-                        // final step of the 3-linear interpolation
-                        newXSs[i, j, k] = f0 * (1 - fT_norm) + f1 * fT_norm;
+                        // Normalized volumes:
+                        double Na, Nb, Nc, Nd, Ne, Nf, Ng, Nh;
+                        // current summation
+                        double x12, x20, y12, y20, z12, z20, total;
+                        total = (x1 - x0) * (y1 - y0) * (z1 - z0);
+
+                        x12 = (x1 - x2);
+                        x20 = (x2 - x0);
+                        y12 = (y1 - y2);
+                        y20 = (y2 - y0);
+                        z12 = (z1 - z2);
+                        z20 = (z2 - z0);
+
+                        Na = (x12 * y12 * z20) / total;
+                        Nb = (x12 * y20 * z20) / total;
+
+                        Nc = (x20 * y12 * z20) / total;
+                        Nd = (x20 * y20 * z20) / total;
+
+                        Ne = (x12 * y12 * z12) / total;
+                        Nf = (x12 * y20 * z12) / total;
+
+                        Ng = (x20 * y12 * z12) / total;
+                        Nh = (x20 * y20 * z12) / total;
+
+                        //    f8           f0                              f1
+                        newXSs[i, j, k] = xsValues[ix0, iy0, iz1] * Na + xsValues[ix0, iy1, iz1] * Nb +
+                            //                 f2                              f3
+                                          xsValues[ix1, iy0, iz1] * Nc + xsValues[ix1, iy1, iz1] * Nd +
+                            //                 f4                              f5
+                                          xsValues[ix0, iy0, iz0] * Ne + xsValues[ix0, iy1, iz0] * Nf +
+                            //                 f6                              f7
+                                          xsValues[ix1, iy0, iz0] * Ng + xsValues[ix1, iy1, iz0] * Nh;
+
+                        // SECOND VARIANT TO INTERPOLATE
+
+                        //// set the coordinates of the new interpolated value
+                        //double fT_norm = CheckForZero(fT, newFt, ix0, ix1, i);
+                        //double mT_norm = CheckForZero(mT, newMt, iy0, iy1, j);
+                        //double dM_norm = CheckForZero(Dm, newDm, iz0, iz1, k);
+
+                        //// Interpolation block ....
+                        //// first step of the 3-linear interpolation
+                        //double f00 = xsValues[ix0, iy0, iz0] * (1 - dM_norm) + xsValues[ix1, iy0, iz0] * (dM_norm);
+                        //double f10 = xsValues[ix0, iy1, iz0] * (1 - dM_norm) + xsValues[ix1, iy1, iz0] * (dM_norm);
+                        //double f01 = xsValues[ix0, iy0, iz1] * (1 - dM_norm) + xsValues[ix1, iy0, iz1] * (dM_norm);
+                        //double f11 = xsValues[ix0, iy1, iz1] * (1 - dM_norm) + xsValues[ix1, iy1, iz1] * (dM_norm);
+
+                        //// second step of the 3-linear interpolation
+                        //double f0 = f00 * (1 - mT_norm) + f10 * mT_norm;
+                        //double f1 = f01 * (1 - mT_norm) + f11 * mT_norm;
+
+                        //// final step of the 3-linear interpolation
+                        //newXSs[i, j, k] = f0 * (1 - fT_norm) + f1 * fT_norm;
 
                         // printings to verify values and points
-                        Console.WriteLine(" Coordinates {0}, {1}, {2}     -> Function value is    : '{3:E5}' ", fT[x0], mT[y0], Dm[z0], xsValues[x0, y0, z0]);
-                        Console.WriteLine(" Coordinates {0}, {1}, {2}     -> Interpolated value is: '{3:E5}' ", newFt[i], newMt[j], newDm[k], newXSs[i, j, k]);
-                        Console.WriteLine(" Coordinates {0}, {1}, {2}     -> Function value is    : '{3:E5}' ", fT[x1], mT[y1], Dm[z1], xsValues[x1, y1, z1]);
+                        Console.WriteLine(" Coordinates {0}, {1}, {2}     -> Function value is    : '{3:E5}' ", x0, y0, z0, xsValues[ix0, iy0, iz0]);
+                        //Console.WriteLine(" Coordinates {0}, {1}, {2}     -> Interpolated value is: '{3:E5}' ", newFt[i], newMt[j], newDm[k], newXSs[i, j, k]);
+                        Console.WriteLine(" Coordinates {0}, {1}, {2}     -> Interpolated value is: '{3:E5}' ", x2, y2, z2, newXSs[i, j, k]);
+                        Console.WriteLine(" Coordinates {0}, {1}, {2}     -> Function value is    : '{3:E5}' ", x1, y1, z1, xsValues[ix1, iy1, iz1]);
 
                         interpolationCounter++ ;
 
@@ -236,11 +293,11 @@
             }
 
             l = parametersSum;
-            for (int i = 0; i < fT.Length; i++)
+            for (int k = 0; k < Dm.Length; k++)
             {
                 for (int j = 0; j < mT.Length; j++)
                 {
-                    for (int k = 0; k < Dm.Length; k++)
+                    for (int i = 0; i < fT.Length; i++)
                     {
                         xsValues[i, j, k] = inputValues[l];
                         Console.WriteLine("Iteration {4} - Value for points Ft {1}, Mt {2} and Dm {3}  is: '{0:E5}' ",
@@ -261,7 +318,8 @@
             for (int h = 0; h < poitsToInterpolate.Length; h++)
             {
                 delta = poitsToInterpolate[h] - newPoints[counter];
-                if (delta == 0)
+                // if delta == zero:
+                if ( Math.Abs(delta) < 1e-5 )
                 {
                     if (h == 0)
                     {
@@ -293,16 +351,16 @@
 
         static public double CheckForZero(double[] poitsToInterpolate, double[] newPoints, int a0, int a1, int counter)
         {
-            double fT_norm;
-            if ((poitsToInterpolate[a1] - poitsToInterpolate[a0]) == 0)
+            double norm;
+            if (Math.Abs(poitsToInterpolate[a1] - poitsToInterpolate[a0]) < 1e-5)
             {
-                fT_norm = 0;
+                norm = 0;
             }
             else
             {
-                fT_norm = (newPoints[counter] - poitsToInterpolate[a0]) / (poitsToInterpolate[a1] - poitsToInterpolate[a0]);
+                norm = (newPoints[counter] - poitsToInterpolate[a0]) / (poitsToInterpolate[a1] - poitsToInterpolate[a0]);
             }
-            return fT_norm;
+            return norm;
         }
 
         //static public void PrintInterpolatedValues(double[] newFt, double[] newMt, double[] newDm, double[, ,] newXSs, string inputName);

@@ -33,7 +33,7 @@
             // new parameters' values
             double[] newFt = new double[2] { 0.1E+1, 0.15E+1 };
             double[] newMt = new double[2] { 0.1E+1, 0.15E+1 };
-            double[] newDm = new double[2] { 0.1E+1, 0.3E+1 };
+            double[] newDm = new double[2] { 0.1E+1, 0.15E+1 };
 
             int interpolationCounter = 0;
             int x0, x1, y0, y1, z0, z1;
@@ -209,16 +209,16 @@
 
         static public double CheckForZero(double[] poitsToInterpolate, double[] newPoints, int a0, int a1, int counter)
         {
-            double fT_norm;
-            if ((poitsToInterpolate[a1] - poitsToInterpolate[a0]) == 0)
+            double norm;
+            if ( Math.Abs(poitsToInterpolate[a1] - poitsToInterpolate[a0]) < 1e-5 )
             {
-                fT_norm = 0;
+                norm = 0;
             }
             else
             {
-                fT_norm = (newPoints[counter] - poitsToInterpolate[a0]) / (poitsToInterpolate[a1] - poitsToInterpolate[a0]);
+                norm = (newPoints[counter] - poitsToInterpolate[a0]) / (poitsToInterpolate[a1] - poitsToInterpolate[a0]);
             }
-            return fT_norm;
+            return norm;
         }
 
     }
