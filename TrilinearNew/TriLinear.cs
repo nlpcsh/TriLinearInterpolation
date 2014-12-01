@@ -13,10 +13,10 @@
         {
 
             // Read the file as a string.
-            //string[] inputMatrix = { "841_abso_1gr.lib", "841_abso_2gr.lib", "841_diff_1gr.lib", "841_diff_2gr.lib", "841_scat_12gr.lib",
-            //                         "842_abso_1gr.lib", "842_abso_2gr.lib", "842_diff_1gr.lib", "842_diff_2gr.lib", "842_scat_12gr.lib",
-            //                         "843_abso_1gr.lib", "843_abso_2gr.lib", "843_diff_1gr.lib", "843_diff_2gr.lib", "843_scat_12gr.lib" };
-            string[] inputMatrix = { "841_diff_2gr.lib" };
+            string[] inputMatrix = { "841_abso_1gr.lib", "841_abso_2gr.lib", "841_diff_1gr.lib", "841_diff_2gr.lib", "841_scat_12gr.lib",
+                                     "842_abso_1gr.lib", "842_abso_2gr.lib", "842_diff_1gr.lib", "842_diff_2gr.lib", "842_scat_12gr.lib",
+                                     "843_abso_1gr.lib", "843_abso_2gr.lib", "843_diff_1gr.lib", "843_diff_2gr.lib", "843_scat_12gr.lib" };
+            //string[] inputMatrix = { "841_diff_2gr.lib" };
 
             for (int i = 0; i < inputMatrix.Length; i++)
             {
