@@ -25,7 +25,7 @@
 
                 LinearInterpolation(text, inputName);
             }
- 
+
         }
 
         // Methods used in MAIN
@@ -184,76 +184,156 @@
                         Console.WriteLine(" Coordinates x2={0}, y2={1}, z2={2}  -> INTERPOLATED VALUE: '{3:E5}' ", x2, y2, z2, newXSs[i, j, k]);
                         //Console.WriteLine(" Coordinates {0}, {1}, {2}     -> Function value is    : '{3:E5}' ", x1, y1, z1, xsValues[ix1, iy1, iz1]);
 
-                        interpolationCounter++ ;
+                        interpolationCounter++;
 
                     }
                 }
             }
 
-            //PrintInterpolatedValues(newFt, newMt, newDm, newXSs, inputName);
-            using (StreamWriter file = new StreamWriter(@"..\..\Output\Interpolated_" + inputName))
+            if (true) // print real set of XS
             {
-                int m = 1;
 
-                // Print the state parameters points
-                foreach (double digit in newFt)
-                {
-                    // add new line each 5-th element 
-                    if (m % 5 == 0)
-                    {
-                        file.WriteLine(" {0:E5} ", digit);
-                    }
-                    else
-                    {
-                        file.Write(" {0:E5} ", digit);
-                    }
-                    m++;
-                }
-                foreach (double digit in newMt)
-                {
-                    // add new line each 5-th element 
-                    if (m % 5 == 0)
-                    {
-                        file.WriteLine(" {0:E5} ", digit);
-                    }
-                    else
-                    {
-                        file.Write(" {0:E5} ", digit);
-                    }
-                    m++;
-                }
-                foreach (double digit in newDm)
-                {
-                    // add new line each 5-th element 
-                    if (m % 5 == 0)
-                    {
-                        file.WriteLine(" {0:E5} ", digit);
-                    }
-                    else
-                    {
-                        file.Write(" {0:E5} ", digit);
-                    }
-                    m++;
-                }
 
-                // printings of the new interpolated XS values...
-                for (int i = 0; i < newDm.Length; i++)
+                //PrintInterpolatedValues(newFt, newMt, newDm, newXSs, inputName);
+                using (StreamWriter file = new StreamWriter(@"..\..\Output\Interpolated_" + inputName))
                 {
-                    for (int j = 0; j < newMt.Length; j++)
+                    int m = 1;
+
+                    // Print the state parameters points
+                    foreach (double digit in newFt)
                     {
-                        for (int k = 0; k < newFt.Length; k++)
+                        // add new line each 5-th element 
+                        if (m % 5 == 0)
                         {
-                            if (m % 5 == 0)
+                            file.WriteLine(" {0:E5} ", digit);
+                        }
+                        else
+                        {
+                            file.Write(" {0:E5} ", digit);
+                        }
+                        m++;
+                    }
+                    foreach (double digit in newMt)
+                    {
+                        // add new line each 5-th element 
+                        if (m % 5 == 0)
+                        {
+                            file.WriteLine(" {0:E5} ", digit);
+                        }
+                        else
+                        {
+                            file.Write(" {0:E5} ", digit);
+                        }
+                        m++;
+                    }
+                    foreach (double digit in newDm)
+                    {
+                        // add new line each 5-th element 
+                        if (m % 5 == 0)
+                        {
+                            file.WriteLine(" {0:E5} ", digit);
+                        }
+                        else
+                        {
+                            file.Write(" {0:E5} ", digit);
+                        }
+                        m++;
+                    }
+
+                    // printings of the new interpolated XS values...
+                    for (int i = 0; i < newDm.Length; i++)
+                    {
+                        for (int j = 0; j < newMt.Length; j++)
+                        {
+                            for (int k = 0; k < newFt.Length; k++)
                             {
-                                file.WriteLine(" {0:E5} ", newXSs[k, j, i]);
+                                if (m % 5 == 0)
+                                {
+                                    file.WriteLine(" {0:E5} ", newXSs[k, j, i]);
+                                }
+                                else
+                                {
+                                    file.Write(" {0:E5} ", newXSs[k, j, i]);
+                                }
+                                m++;
                             }
-                            else
-                            {
-                                file.Write(" {0:E5} ", newXSs[k, j, i]);
-                            }
-                            m++;
                         }
                     }
+
+
+                }
+            }
+            else // Print mini core XS set
+            {
+                //PrintInterpolatedValues(newFt, newMt, newDm, newXSs, inputName);
+                using (StreamWriter file = new StreamWriter(@"..\..\Output\Mini_Interpolated_" + inputName))
+                {
+                    int m = 1;
+                    int[] i_mini_Ft = { 0, 1 };
+                    int[] i_mini_Mt = { 1, 2 };
+                    int[] i_mini_Dm = { 11, 12 };
+                    // Print the state parameters points
+                    foreach (int index in i_mini_Ft)
+                    {
+                        // add new line each 5-th element 
+                        if (m % 5 == 0)
+                        {
+                            file.WriteLine(" {0:E5} ", newFt[index]);
+                        }
+                        else
+                        {
+                            file.Write(" {0:E5} ", newFt[index]);
+                        }
+                        m++;
+                    }
+                    foreach (int index in i_mini_Mt)
+                    {
+                        // add new line each 5-th element 
+                        if (m % 5 == 0)
+                        {
+                            file.WriteLine(" {0:E5} ", newMt[index]);
+                        }
+                        else
+                        {
+                            file.Write(" {0:E5} ", newMt[index]);
+                        }
+                        m++;
+                    }
+                    foreach (int index in i_mini_Dm)
+                    {
+                        // add new line each 5-th element 
+                        if (m % 5 == 0)
+                        {
+                            file.WriteLine(" {0:E5} ", newDm[index]);
+                        }
+                        else
+                        {
+                            file.Write(" {0:E5} ", newDm[index]);
+                        }
+                        m++;
+                    }
+
+                    // printings of the new interpolated XS values...
+                    for (int i = 0; i < i_mini_Dm.Length; i++)
+                    {
+                        for (int j = 0; j < i_mini_Mt.Length; j++)
+                        {
+                            for (int k = 0; k < i_mini_Ft.Length; k++)
+                            {
+                                if (m % 5 == 0)
+                                {
+                                    file.WriteLine(" {0:E5} ", newXSs[i_mini_Ft[k], i_mini_Mt[j], i_mini_Dm[i]]);
+                                }
+                                else
+                                {
+                                    file.Write(" {0:E5} ", newXSs[i_mini_Ft[k], i_mini_Mt[j], i_mini_Dm[i]]);
+                                }
+                                m++;
+                            }
+                        }
+                    }
+
+
                 }
             }
         }
@@ -342,7 +422,7 @@
             {
                 delta = poitsToInterpolate[h] - newPoints[counter];
                 // if delta == zero:
-                if ( Math.Abs(delta) < 1e-5 )
+                if (Math.Abs(delta) < 1e-5)
                 {
                     if (h == 0)
                     {
