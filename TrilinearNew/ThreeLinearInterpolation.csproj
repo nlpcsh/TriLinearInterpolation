@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataInitializer.cs" />
     <Compile Include="InputReader.cs" />
+    <Compile Include="OutputToFile.cs" />
     <Compile Include="TriLinear.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TriLinearProgram.cs" />

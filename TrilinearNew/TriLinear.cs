@@ -1,92 +1,34 @@
 ﻿namespace ThreeLinearInterpolation
 {
     using System;
-    using System.Globalization;
-    using System.IO;
-    using System.Linq;
 
     internal class InterpolateXS
     {
-        // Initial mesh of parameters' values
-        private double[] fT = new double[5] { 0.4700000E+03, 0.6000000E+03, 0.8000000E+03, 0.1100000E+04, 0.1300000E+04 };
-        private double[] mT = new double[5] { 0.470000E+03, 0.500000E+03, 0.540000E+03, 0.580000E+03, 0.620000E+03 };
-        private double[] dM = new double[6] { 0.500000E+02, 0.100000E+03, 0.3000E+03, 0.6000E+03, 0.74000E+03, 0.885000E+03 };
-
-        // new parameters' values
-        private double[] newFt = new double[5] { 0.470000E+03, 0.852500E+03, 0.123500E+04, 0.161750E+04, 0.200000E+04 };
-        private double[] newMt = new double[3] { 0.470000E+03, 0.545000E+03, 0.620000E+03 };
-        private double[] newDm = new double[13] 
-        { 
-            0.500000E+02, 0.760000E+02, 0.102000E+03, 0.128000E+03, 0.154000E+03, 0.207000E+03, 0.259000E+03,
-            0.311000E+03, 0.363000E+03, 0.467500E+03, 0.572000E+03, 0.676000E+03, 0.885000E+03
-        };
-
-        private double[,,] xsValues;
-        private double[,,] newXSs;
-
-        private string inputText;
-        private double[] inputValues;
-        private string inputDataFileName;
-
         public InterpolateXS()
         {
-            this.newXSs = new double[this.newFt.Length, this.newMt.Length, this.newDm.Length];
-            this.xsValues = new double[this.fT.Length, this.mT.Length, this.dM.Length];
         }
 
-        public InterpolateXS(string inputText, string inputDataFileName)
-            : this()
-        {
-            this.InputText = inputText;
-            this.inputDataFileName = inputDataFileName;
-        }
+        // Initial mesh of parameters' values
+        public double[] fT { get; set; }
 
-        public string InputText
-        {
-            get
-            {
-                return this.inputText;
-            }
+        public double[] mT { get; set; }
 
-            set
-            {
-                this.inputText = value;
-            }
-        }
+        public double[] dM { get; set; }
 
-        public double[] InputValues
-        {
-            get
-            {
-                return this.inputValues;
-            }
+        // new parameters' values
+        public double[] newFt { get; set; }
 
-            set
-            {
-                this.inputValues = value;
-            }
-        }
+        public double[] newMt { get; set; }
 
-        public string InputDataFileName
-        {
-            get
-            {
-                return this.inputDataFileName;
-            }
+        public double[] newDm { get; set; }
 
-            set
-            {
-                this.inputDataFileName = value;
-            }
-        }
+        public double[, ,] xsValues { get; set; }
+
+        public double[, ,] newXSs { get; set; }
 
         public void LinearInterpolation()
         {
-            //// initialize variable: InputValues from InputText
-            this.ConvertTextToNumbers();
-
-            //// initialize variable: xsValues
-            this.DistributionOfInputValues();
+            this.newXSs = new double[this.newFt.Length, this.newMt.Length, this.newDm.Length];
 
             Console.WriteLine(" Start to dictribute values: ");
 
@@ -143,164 +85,6 @@
                         this.PrintingOfPointsAndValues(ix0, ix1, iy0, iy1, iz0, iz1, x0, x1, y0, y1, z0, z1, x2, y2, z2, i, j, k);
 
                         interpolationCounter++;
-                    }
-                }
-            }
-
-            //// print real set of XS
-            this.PrintTheOutputInFile();
-
-            //// Print mini core XS set
-            //// this.PrintTheOutputInMiniFormatInFile();
-        }
-
-        private void PrintTheOutputInMiniFormatInFile()
-        {
-            using (StreamWriter file = new StreamWriter(@"..\..\Output\Mini_Interpolated_" + this.InputDataFileName))
-            {
-                int m = 1;
-                int[] i_mini_Ft = { 0, 1 };
-                int[] i_mini_Mt = { 1, 2 };
-                int[] i_mini_Dm = { 11, 12 };
-                //// Print the state parameters points
-                foreach (int index in i_mini_Ft)
-                {
-                    //// add new line each 5-th element 
-                    if (m % 5 == 0)
-                    {
-                        file.WriteLine(" {0:E5} ", this.newFt[index]);
-                    }
-                    else
-                    {
-                        file.Write(" {0:E5} ", this.newFt[index]);
-                    }
-
-                    m++;
-                }
-
-                foreach (int index in i_mini_Mt)
-                {
-                    //// add new line each 5-th element 
-                    if (m % 5 == 0)
-                    {
-                        file.WriteLine(" {0:E5} ", this.newMt[index]);
-                    }
-                    else
-                    {
-                        file.Write(" {0:E5} ", this.newMt[index]);
-                    }
-
-                    m++;
-                }
-
-                foreach (int index in i_mini_Dm)
-                {
-                    //// add new line each 5-th element 
-                    if (m % 5 == 0)
-                    {
-                        file.WriteLine(" {0:E5} ", this.newDm[index]);
-                    }
-                    else
-                    {
-                        file.Write(" {0:E5} ", this.newDm[index]);
-                    }
-
-                    m++;
-                }
-
-                //// printings of the new interpolated XS values...
-                for (int i = 0; i < i_mini_Dm.Length; i++)
-                {
-                    for (int j = 0; j < i_mini_Mt.Length; j++)
-                    {
-                        for (int k = 0; k < i_mini_Ft.Length; k++)
-                        {
-                            if (m % 5 == 0)
-                            {
-                                file.WriteLine(" {0:E5} ", this.newXSs[i_mini_Ft[k], i_mini_Mt[j], i_mini_Dm[i]]);
-                            }
-                            else
-                            {
-                                file.Write(" {0:E5} ", this.newXSs[i_mini_Ft[k], i_mini_Mt[j], i_mini_Dm[i]]);
-                            }
-
-                            m++;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void PrintTheOutputInFile()
-        {
-            using (StreamWriter file = new StreamWriter(@"..\..\Output\Interpolated_" + this.InputDataFileName))
-            {
-                int m = 1;
-
-                // Print the state parameters points
-                foreach (double digit in this.newFt)
-                {
-                    // add new line each 5-th element 
-                    if (m % 5 == 0)
-                    {
-                        file.WriteLine(" {0:E5} ", digit);
-                    }
-                    else
-                    {
-                        file.Write(" {0:E5} ", digit);
-                    }
-
-                    m++;
-                }
-
-                foreach (double digit in this.newMt)
-                {
-                    // add new line each 5-th element 
-                    if (m % 5 == 0)
-                    {
-                        file.WriteLine(" {0:E5} ", digit);
-                    }
-                    else
-                    {
-                        file.Write(" {0:E5} ", digit);
-                    }
-
-                    m++;
-                }
-
-                foreach (double digit in this.newDm)
-                {
-                    // add new line each 5-th element 
-                    if (m % 5 == 0)
-                    {
-                        file.WriteLine(" {0:E5} ", digit);
-                    }
-                    else
-                    {
-                        file.Write(" {0:E5} ", digit);
-                    }
-
-                    m++;
-                }
-
-                // printings of the new interpolated XS values...
-                for (int i = 0; i < this.newDm.Length; i++)
-                {
-                    for (int j = 0; j < this.newMt.Length; j++)
-                    {
-                        for (int k = 0; k < this.newFt.Length; k++)
-                        {
-                            if (m % 5 == 0)
-                            {
-                                file.WriteLine(" {0:E5} ", this.newXSs[k, j, i]);
-                            }
-                            else
-                            {
-                                file.Write(" {0:E5} ", this.newXSs[k, j, i]);
-                            }
-
-                            m++;
-                        }
                     }
                 }
             }
@@ -385,85 +169,15 @@
                               (this.xsValues[ix1, iy0, iz0] * Ng) + (this.xsValues[ix1, iy1, iz0] * Nh);
         }
 
-        private void ConvertTextToNumbers()
-        {
-            var controlChars = from c in this.InputText.ToCharArray() where char.IsControl(c) select c;
-            foreach (char c in controlChars)
-            {
-                this.InputText = this.InputText.Replace(c.ToString(), string.Empty);
-            }
-
-            char delimiterChars = ' ';
-
-            //// array to store readed separate values
-            string[] words;
-            words = this.InputText.Split(delimiterChars);
-
-            Console.WriteLine("{0} words in text:", words.Length);
-
-            foreach (string s in words)
-            {
-                Console.WriteLine(s);
-            }
-
-            NumberStyles styles;
-            styles = NumberStyles.AllowExponent | NumberStyles.AllowDecimalPoint;
-
-            this.InputValues = new double[words.Length];
-
-            int i = 0;
-            foreach (string s in words)
-            {
-                //// convert string to double
-                if (double.TryParse(s, styles, CultureInfo.InvariantCulture, out this.InputValues[i]))
-                {
-                    i++;
-                }
-                else
-                {
-                    Console.WriteLine("Unable to convert '{0}'.", s);
-                }
-            }
-        }
-
-        private void DistributionOfInputValues()
-        {
-            int l, parametersSum = 0;
-            parametersSum = this.fT.Length + this.mT.Length + this.dM.Length;
-            double[] parameters = new double[parametersSum];
-
-            Console.WriteLine(" Sum of the parameters {0} ", parametersSum);
-
-            for (l = 0; l < parametersSum; l++)
-            {
-                parameters[l] = this.InputValues[l];
-            }
-
-            l = parametersSum;
-            for (int k = 0; k < this.dM.Length; k++)
-            {
-                for (int j = 0; j < this.mT.Length; j++)
-                {
-                    for (int i = 0; i < this.fT.Length; i++)
-                    {
-                        this.xsValues[i, j, k] = this.InputValues[l];
-                        Console.WriteLine("Iteration {4} - Value for points Ft {1}, Mt {2} and Dm {3}  is: '{0:E5}' ",
-                            this.xsValues[i, j, k], i + 1, j + 1, k + 1, l - 15);
-                        l++;
-                    }
-                }
-            }
-        }
-
-        private int[] FindPointsToInterpolate(double[] poitsToInterpolate, double[] newPoints, int counter)
+        private int[] FindPointsToInterpolate(double[] pointsToInterpolate, double[] newPoints, int counter)
         {
             int[] coordinates = new int[2];
             double delta = 0;
 
             //// searching for points before and after the desired point to interpolate
-            for (int h = 0; h < poitsToInterpolate.Length; h++)
+            for (int h = 0; h < pointsToInterpolate.Length; h++)
             {
-                delta = poitsToInterpolate[h] - newPoints[counter];
+                delta = pointsToInterpolate[h] - newPoints[counter];
                 //// if delta == zero:
                 if (Math.Abs(delta) < 1e-5)
                 {
@@ -486,7 +200,7 @@
                     coordinates[1] = h;
                     break;
                 }
-                else if ((h == poitsToInterpolate.Length - 1) && (delta < 0))
+                else if ((h == pointsToInterpolate.Length - 1) && (delta < 0))
                 {
                     coordinates[0] = h - 1;
                     coordinates[1] = h;
@@ -496,17 +210,17 @@
             return coordinates;
         }
 
-        private double NormalizeDistance(double[] poitsToInterpolate, double[] newPoints, int a0, int a1, int counter)
+        private double NormalizeDistance(double[] pointsToInterpolate, double[] newPoints, int a0, int a1, int counter)
         {
             double norm;
-            if (Math.Abs(poitsToInterpolate[a1] - poitsToInterpolate[a0]) < 1e-5)
+            if (Math.Abs(pointsToInterpolate[a1] - pointsToInterpolate[a0]) < 1e-5)
             {
                 Console.WriteLine(" Warning! Points to interpolate are the same!!!! ");
                 norm = 0;
             }
             else
             {
-                norm = (newPoints[counter] - poitsToInterpolate[a0]) / (poitsToInterpolate[a1] - poitsToInterpolate[a0]);
+                norm = (newPoints[counter] - pointsToInterpolate[a0]) / (pointsToInterpolate[a1] - pointsToInterpolate[a0]);
             }
 
             return norm;
