@@ -12,20 +12,20 @@
         {
 
             // Initial mesh of parameters' values
-            double[] fT = new double[2] { 0.1E+1 , 0.2E+1  };
-            double[] mT = new double[2] { 0.1E+1 , 0.2E+1  };
-            double[] Dm = new double[2] { 0.1E+1 , 0.2E+1  };
+            double[] fT = new double[2] { 0.1E+1, 0.2E+1 };
+            double[] mT = new double[2] { 0.1E+1, 0.2E+1 };
+            double[] Dm = new double[2] { 0.1E+1, 0.2E+1 };
 
             // Test points of squared mesh between 1,1,1 and 2,2,2 points
-            double[, ,] xsValues = new double[2,2,2] ;
+            double[,,] xsValues = new double[2, 2, 2];
 
             // TEST FUNCTION
             // f = a*x + b*y + c*z
             //
             double a, b, c;
-            a = 2.0 ;
-            b = 1.0 ;
-            c = 0.5 ;
+            a = 2.0;
+            b = 1.0;
+            c = 0.5;
 
             xsValues[0, 0, 0] = fT[0] * a + mT[0] * b + Dm[0] * c;
             xsValues[0, 0, 1] = fT[0] * a + mT[0] * b + Dm[1] * c;
@@ -37,7 +37,7 @@
             xsValues[1, 1, 1] = fT[1] * a + mT[1] * b + Dm[1] * c;
 
             // New 2D array to store new - extrapolated values
-            double[, ,] newXSs = new Double[1,1,1];
+            double[,,] newXSs = new Double[1, 1, 1];
             // new parameters' values
             double[] newFt = new double[1] { 0.1E+1 };
             double[] newMt = new double[1] { 0.1E+1 };
@@ -70,7 +70,7 @@
                         iz0 = outputCoeffArray[0];
                         iz1 = outputCoeffArray[1];
 
-                        //Console.WriteLine(" Interp. step {0}", interpolationCounter);
+                        //// Console.WriteLine(" Interp. step {0}", interpolationCounter);
 
                         // points to interpolate from:
                         x0 = fT[ix0];
@@ -171,7 +171,7 @@
                         Console.WriteLine(" ");
                         Console.WriteLine(" Coordinates x2={0}, y2={1}, z2={2}  -> INTERPOLATED VALUE: '{3:E5}' ", x2, y2, z2, newXSs[i, j, k]);
                         Console.WriteLine(" ");
-                        Console.WriteLine(" Coordinates x2={0}, y2={1}, z2={2}  -> Calculated   VALUE: '{3:E5}' ", x2, y2, z2, testF );
+                        Console.WriteLine(" Coordinates x2={0}, y2={1}, z2={2}  -> Calculated   VALUE: '{3:E5}' ", x2, y2, z2, testF);
                         //Console.WriteLine(" Coordinates {0}, {1}, {2}     -> Function value is    : '{3:E5}' ", x1, y1, z1, xsValues[ix1, iy1, iz1]);
 
                         interpolationCounter++;
@@ -201,7 +201,7 @@
                     else
                     {
                         coordinates[0] = h - 1;
-                        coordinates[1] = h ;
+                        coordinates[1] = h;
                     }
                     break;
                 }
@@ -224,7 +224,7 @@
         static public double NormalizeDistance(double[] poitsToInterpolate, double[] newPoints, int a0, int a1, int counter)
         {
             double norm;
-            if ( Math.Abs(poitsToInterpolate[a1] - poitsToInterpolate[a0]) < 1e-5 )
+            if (Math.Abs(poitsToInterpolate[a1] - poitsToInterpolate[a0]) < 1e-5)
             {
                 norm = 0;
             }

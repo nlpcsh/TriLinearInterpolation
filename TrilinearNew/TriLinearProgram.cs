@@ -1,8 +1,8 @@
 ﻿namespace ThreeLinearInterpolation
 {
-    class TriLinearProgram
+    internal class TriLinearProgram
     {
-        static public void Main()
+        public static void Main()
         {
             var inputReader = new InputReader();
             var interpolator = new InterpolateXS();
