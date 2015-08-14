@@ -9,26 +9,26 @@
         }
 
         // Initial mesh of parameters' values
-        public double[] fT { get; set; }
+        public double[] xAxisPoints { get; set; }
 
-        public double[] mT { get; set; }
+        public double[] yAxisPoints { get; set; }
 
-        public double[] dM { get; set; }
+        public double[] zAxisPoints { get; set; }
 
         // new parameters' values
-        public double[] newFt { get; set; }
+        public double[] xAxisNewPoints { get; set; }
 
-        public double[] newMt { get; set; }
+        public double[] yAxisNewPoints { get; set; }
 
-        public double[] newDm { get; set; }
+        public double[] zAxisNewPoints { get; set; }
 
-        public double[, ,] xsValues { get; set; }
+        public double[, ,] Initial3DValues { get; set; }
 
-        public double[, ,] newXSs { get; set; }
+        public double[, ,] Interpolated3DValues { get; set; }
 
         public void LinearInterpolation()
         {
-            this.newXSs = new double[this.newFt.Length, this.newMt.Length, this.newDm.Length];
+            this.Interpolated3DValues = new double[this.xAxisNewPoints.Length, this.yAxisNewPoints.Length, this.zAxisNewPoints.Length];
 
             Console.WriteLine(" Start to dictribute values: ");
 
@@ -38,47 +38,47 @@
             //// coordinates' values
             double x0, x1, y0, y1, z0, z1, x2, y2, z2;
 
-            for (int i = 0; i < this.newFt.Length; i++)
+            for (int i = 0; i < this.xAxisNewPoints.Length; i++)
             {
                 //// process fT to find 2 points to interpolate inbetween
-                int[] outputCoeffArray = this.FindPointsToInterpolate(this.fT, this.newFt, i);
+                int[] outputCoeffArray = this.FindPointsToInterpolate(this.xAxisPoints, this.xAxisNewPoints, i);
                 ix0 = outputCoeffArray[0];
                 ix1 = outputCoeffArray[1];
 
-                for (int j = 0; j < this.newMt.Length; j++)
+                for (int j = 0; j < this.yAxisNewPoints.Length; j++)
                 {
                     //// process Mt to find 2 points to interpolate inbetween
-                    outputCoeffArray = this.FindPointsToInterpolate(this.mT, this.newMt, j);
+                    outputCoeffArray = this.FindPointsToInterpolate(this.yAxisPoints, this.yAxisNewPoints, j);
                     iy0 = outputCoeffArray[0];
                     iy1 = outputCoeffArray[1];
 
-                    for (int k = 0; k < this.newDm.Length; k++)
+                    for (int k = 0; k < this.zAxisNewPoints.Length; k++)
                     {
                         //// process Dm to find 2 points to interpolate inbetween
-                        outputCoeffArray = this.FindPointsToInterpolate(this.dM, this.newDm, k);
+                        outputCoeffArray = this.FindPointsToInterpolate(this.zAxisPoints, this.zAxisNewPoints, k);
                         iz0 = outputCoeffArray[0];
                         iz1 = outputCoeffArray[1];
 
                         Console.WriteLine(" Interp. step {0}", interpolationCounter);
 
                         //// points to interpolate from:
-                        x0 = this.fT[ix0];
-                        y0 = this.mT[iy0];
-                        z0 = this.dM[iz0];
+                        x0 = this.xAxisPoints[ix0];
+                        y0 = this.yAxisPoints[iy0];
+                        z0 = this.zAxisPoints[iz0];
 
-                        x1 = this.fT[ix1];
-                        y1 = this.mT[iy1];
-                        z1 = this.dM[iz1];
+                        x1 = this.xAxisPoints[ix1];
+                        y1 = this.yAxisPoints[iy1];
+                        z1 = this.zAxisPoints[iz1];
 
                         //// current points:
-                        x2 = this.newFt[i];
-                        y2 = this.newMt[j];
-                        z2 = this.newDm[k];
+                        x2 = this.xAxisNewPoints[i];
+                        y2 = this.yAxisNewPoints[j];
+                        z2 = this.zAxisNewPoints[k];
 
                         //// FIRST VARIANT OF INTERPOLATION
                         this.FirstInterpolationVariant(ix0, ix1, iy0, iy1, iz0, iz1, x0, x1, y0, y1, z0, z1, x2, y2, z2, i, j, k);
 
-                        //// SECOND VARIANT TO INTERPOLATE
+                        //// SECOND VARIANT OF INTERPOLATION
                         //// this.SecondInterpolationVariant(ix0, ix1, iy0, iy1, iz0, iz1, i, j, k);
 
                         //// printings to verify values and points
@@ -92,31 +92,31 @@
 
         private void PrintingOfPointsAndValues(int ix0, int ix1, int iy0, int iy1, int iz0, int iz1, double x0, double x1, double y0, double y1, double z0, double z1, double x2, double y2, double z2, int i, int j, int k)
         {
-            Console.WriteLine(" Coordinates x0={0}, y0={1}, z0={2}  -> Function value is : '{3:E5}' ", x0, y0, z0, this.xsValues[ix0, iy0, iz0]);
-            Console.WriteLine(" Coordinates x0={0}, y0={1}, z1={2}  -> Function value is : '{3:E5}' ", x0, y0, z1, this.xsValues[ix0, iy0, iz1]);
-            Console.WriteLine(" Coordinates x0={0}, y1={1}, z0={2}  -> Function value is : '{3:E5}' ", x0, y1, z0, this.xsValues[ix0, iy1, iz0]);
-            Console.WriteLine(" Coordinates x0={0}, y1={1}, z1={2}  -> Function value is : '{3:E5}' ", x0, y1, z1, this.xsValues[ix0, iy1, iz1]);
-            Console.WriteLine(" Coordinates x1={0}, y0={1}, z0={2}  -> Function value is : '{3:E5}' ", x1, y0, z0, this.xsValues[ix1, iy0, iz0]);
-            Console.WriteLine(" Coordinates x1={0}, y0={1}, z1={2}  -> Function value is : '{3:E5}' ", x1, y0, z1, this.xsValues[ix1, iy0, iz1]);
-            Console.WriteLine(" Coordinates x1={0}, y1={1}, z0={2}  -> Function value is : '{3:E5}' ", x1, y1, z0, this.xsValues[ix1, iy1, iz0]);
-            Console.WriteLine(" Coordinates x1={0}, y1={1}, z1={2}  -> Function value is : '{3:E5}' ", x1, y1, z1, this.xsValues[ix1, iy1, iz1]);
-            Console.WriteLine(" Coordinates x2={0}, y2={1}, z2={2}  -> INTERPOLATED VALUE: '{3:E5}' ", x2, y2, z2, this.newXSs[i, j, k]);
+            Console.WriteLine(" Coordinates x0={0}, y0={1}, z0={2}  -> Function value is : '{3:E5}' ", x0, y0, z0, this.Initial3DValues[ix0, iy0, iz0]);
+            Console.WriteLine(" Coordinates x0={0}, y0={1}, z1={2}  -> Function value is : '{3:E5}' ", x0, y0, z1, this.Initial3DValues[ix0, iy0, iz1]);
+            Console.WriteLine(" Coordinates x0={0}, y1={1}, z0={2}  -> Function value is : '{3:E5}' ", x0, y1, z0, this.Initial3DValues[ix0, iy1, iz0]);
+            Console.WriteLine(" Coordinates x0={0}, y1={1}, z1={2}  -> Function value is : '{3:E5}' ", x0, y1, z1, this.Initial3DValues[ix0, iy1, iz1]);
+            Console.WriteLine(" Coordinates x1={0}, y0={1}, z0={2}  -> Function value is : '{3:E5}' ", x1, y0, z0, this.Initial3DValues[ix1, iy0, iz0]);
+            Console.WriteLine(" Coordinates x1={0}, y0={1}, z1={2}  -> Function value is : '{3:E5}' ", x1, y0, z1, this.Initial3DValues[ix1, iy0, iz1]);
+            Console.WriteLine(" Coordinates x1={0}, y1={1}, z0={2}  -> Function value is : '{3:E5}' ", x1, y1, z0, this.Initial3DValues[ix1, iy1, iz0]);
+            Console.WriteLine(" Coordinates x1={0}, y1={1}, z1={2}  -> Function value is : '{3:E5}' ", x1, y1, z1, this.Initial3DValues[ix1, iy1, iz1]);
+            Console.WriteLine(" Coordinates x2={0}, y2={1}, z2={2}  -> INTERPOLATED VALUE: '{3:E5}' ", x2, y2, z2, this.Interpolated3DValues[i, j, k]);
         }
 
         private void SecondInterpolationVariant(int ix0, int ix1, int iy0, int iy1, int iz0, int iz1, int i, int j, int k)
         {
             double fT_norm, mT_norm, dM_norm, f00, f10, f01, f11, f0, f1;
             //// set the coordinates of the new interpolated value
-            fT_norm = this.NormalizeDistance(this.fT, this.newFt, ix0, ix1, i);
-            mT_norm = this.NormalizeDistance(this.mT, this.newMt, iy0, iy1, j);
-            dM_norm = this.NormalizeDistance(this.dM, this.newDm, iz0, iz1, k);
+            fT_norm = this.NormalizeDistance(this.xAxisPoints, this.xAxisNewPoints, ix0, ix1, i);
+            mT_norm = this.NormalizeDistance(this.yAxisPoints, this.yAxisNewPoints, iy0, iy1, j);
+            dM_norm = this.NormalizeDistance(this.zAxisPoints, this.zAxisNewPoints, iz0, iz1, k);
 
             //// Interpolation block ....
             //// first step of the 3-linear interpolation
-            f00 = (this.xsValues[ix0, iy0, iz0] * Math.Abs(1 - fT_norm)) + (this.xsValues[ix1, iy0, iz0] * fT_norm);
-            f10 = (this.xsValues[ix0, iy1, iz0] * Math.Abs(1 - fT_norm)) + (this.xsValues[ix1, iy1, iz0] * fT_norm);
-            f01 = (this.xsValues[ix0, iy0, iz1] * Math.Abs(1 - fT_norm)) + (this.xsValues[ix1, iy0, iz1] * fT_norm);
-            f11 = (this.xsValues[ix0, iy1, iz1] * Math.Abs(1 - fT_norm)) + (this.xsValues[ix1, iy1, iz1] * fT_norm);
+            f00 = (this.Initial3DValues[ix0, iy0, iz0] * Math.Abs(1 - fT_norm)) + (this.Initial3DValues[ix1, iy0, iz0] * fT_norm);
+            f10 = (this.Initial3DValues[ix0, iy1, iz0] * Math.Abs(1 - fT_norm)) + (this.Initial3DValues[ix1, iy1, iz0] * fT_norm);
+            f01 = (this.Initial3DValues[ix0, iy0, iz1] * Math.Abs(1 - fT_norm)) + (this.Initial3DValues[ix1, iy0, iz1] * fT_norm);
+            f11 = (this.Initial3DValues[ix0, iy1, iz1] * Math.Abs(1 - fT_norm)) + (this.Initial3DValues[ix1, iy1, iz1] * fT_norm);
 
             //// second step of the 3-linear interpolation
             f0 = (f00 * Math.Abs(1 - mT_norm)) + (f10 * mT_norm);
@@ -129,7 +129,7 @@
             Console.WriteLine(" f0={0:E5}, f1={1:E5}", f0, f1);
 
             //// final step of the 3-linear interpolation
-            this.newXSs[i, j, k] = (f0 * Math.Abs(1 - dM_norm)) + (f1 * dM_norm);
+            this.Interpolated3DValues[i, j, k] = (f0 * Math.Abs(1 - dM_norm)) + (f1 * dM_norm);
         }
 
         private void FirstInterpolationVariant(int ix0, int ix1, int iy0, int iy1, int iz0, int iz1, double x0, double x1, double y0, double y1, double z0, double z1, double x2, double y2, double z2, int i, int j, int k)
@@ -160,13 +160,13 @@
             Nh = (x20 * y20 * z12) / total;
 
             ////    f8           f0                              f1
-            this.newXSs[i, j, k] = (this.xsValues[ix0, iy0, iz1] * Na) + (this.xsValues[ix0, iy1, iz1] * Nb) +
+            this.Interpolated3DValues[i, j, k] = (this.Initial3DValues[ix0, iy0, iz1] * Na) + (this.Initial3DValues[ix0, iy1, iz1] * Nb) +
                 ////                 f2                              f3
-                              (this.xsValues[ix1, iy0, iz1] * Nc) + (this.xsValues[ix1, iy1, iz1] * Nd) +
+                              (this.Initial3DValues[ix1, iy0, iz1] * Nc) + (this.Initial3DValues[ix1, iy1, iz1] * Nd) +
                 ////                 f4                              f5
-                              (this.xsValues[ix0, iy0, iz0] * Ne) + (this.xsValues[ix0, iy1, iz0] * Nf) +
+                              (this.Initial3DValues[ix0, iy0, iz0] * Ne) + (this.Initial3DValues[ix0, iy1, iz0] * Nf) +
                 ////                 f6                              f7
-                              (this.xsValues[ix1, iy0, iz0] * Ng) + (this.xsValues[ix1, iy1, iz0] * Nh);
+                              (this.Initial3DValues[ix1, iy0, iz0] * Ng) + (this.Initial3DValues[ix1, iy1, iz0] * Nh);
         }
 
         private int[] FindPointsToInterpolate(double[] pointsToInterpolate, double[] newPoints, int counter)

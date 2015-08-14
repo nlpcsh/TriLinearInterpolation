@@ -6,43 +6,47 @@
         {
             var inputReader = new InputReader();
             var interpolator = new InterpolateXS();
-            var dataInitializator = new DataInitializer();
+            var dataInitializer = new DataInitializer();
             var outputToFile = new OutputToFile();
 
             // Initial Mesh Values
-            interpolator.fT = dataInitializator.FT;
-            interpolator.mT = dataInitializator.MT;
-            interpolator.dM = dataInitializator.DM;
+            interpolator.xAxisPoints = dataInitializer.XAxisPoints;
+            interpolator.yAxisPoints = dataInitializer.YAxisPoints;
+            interpolator.zAxisPoints = dataInitializer.ZAxisPoints;
 
             // New Mesh Values
-            interpolator.newFt = dataInitializator.NewFT;
-            interpolator.newMt = dataInitializator.NewMT;
-            interpolator.newDm = dataInitializator.NewDM;
+            interpolator.xAxisNewPoints = dataInitializer.XAxisNewPoints;
+            interpolator.yAxisNewPoints = dataInitializer.YAxisNewPoints;
+            interpolator.zAxisNewPoints = dataInitializer.ZAxisNewPoints;
 
-            outputToFile.newFt = dataInitializator.NewFT;
-            outputToFile.newMt = dataInitializator.NewMT;
-            outputToFile.newDm = dataInitializator.NewDM;
+            outputToFile.xAxisNewPoints = dataInitializer.XAxisNewPoints;
+            outputToFile.yAxisNewPoints = dataInitializer.YAxisNewPoints;
+            outputToFile.zAxisNewPoints = dataInitializer.ZAxisNewPoints;
+
+            System.Console.WriteLine("Data interpolation process in progress...");
 
             // loop over input data files
-            for (int i = 0; i < inputReader.InputFilesMatrix.Length; i++)
+            for (int i = 0; i < inputReader.InputFiles.Length; i++)
             {
-                dataInitializator.InputText = inputReader.ReadFromFile(i);
-                dataInitializator.ConvertTextToNumbers();
-                dataInitializator.DistributionOfInputValues();
+                dataInitializer.InputDataAsText = inputReader.ReadFromFile(i);
+                dataInitializer.ConvertTextToNumbers();
+                dataInitializer.DistributionOfInputValues();
 
                 //// initial values to interpolate from
-                interpolator.xsValues = dataInitializator.xsValues;
+                interpolator.Initial3DValues = dataInitializer.Initial3DValues;
 
                 interpolator.LinearInterpolation();
 
                 //// print real set of XS
-                outputToFile.newXSs = interpolator.newXSs;
-                outputToFile.InputDataFileName = inputReader.InputFilesMatrix[i];
+                outputToFile.Interpolated3DValues = interpolator.Interpolated3DValues;
+                outputToFile.InputDataFileName = inputReader.InputFiles[i];
                 outputToFile.PrintTheOutputInFile();
 
                 //// Print mini core XS set
                 //// outputToFile.PrintTheOutputInMiniFormatInFile();
             }
+
+            System.Console.WriteLine("End of data interpolation process.");
         }
     }
 }

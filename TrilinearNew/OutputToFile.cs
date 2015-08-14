@@ -7,14 +7,14 @@
         private string inputDataFileName;
 
         // new parameters' values
-        public double[] newFt { get; set; }
+        public double[] xAxisNewPoints { get; set; }
 
-        public double[] newMt { get; set; }
+        public double[] yAxisNewPoints { get; set; }
 
-        public double[] newDm { get; set; }
+        public double[] zAxisNewPoints { get; set; }
 
         // new interpolated values
-        public double[, ,] newXSs { get; set; }
+        public double[, ,] Interpolated3DValues { get; set; }
 
         public string InputDataFileName
         {
@@ -43,11 +43,11 @@
                     //// add new line each 5-th element 
                     if (m % 5 == 0)
                     {
-                        file.WriteLine(" {0:E5} ", this.newFt[index]);
+                        file.WriteLine(" {0:E5} ", this.xAxisNewPoints[index]);
                     }
                     else
                     {
-                        file.Write(" {0:E5} ", this.newFt[index]);
+                        file.Write(" {0:E5} ", this.xAxisNewPoints[index]);
                     }
 
                     m++;
@@ -58,11 +58,11 @@
                     //// add new line each 5-th element 
                     if (m % 5 == 0)
                     {
-                        file.WriteLine(" {0:E5} ", this.newMt[index]);
+                        file.WriteLine(" {0:E5} ", this.yAxisNewPoints[index]);
                     }
                     else
                     {
-                        file.Write(" {0:E5} ", this.newMt[index]);
+                        file.Write(" {0:E5} ", this.yAxisNewPoints[index]);
                     }
 
                     m++;
@@ -73,11 +73,11 @@
                     //// add new line each 5-th element 
                     if (m % 5 == 0)
                     {
-                        file.WriteLine(" {0:E5} ", this.newDm[index]);
+                        file.WriteLine(" {0:E5} ", this.zAxisNewPoints[index]);
                     }
                     else
                     {
-                        file.Write(" {0:E5} ", this.newDm[index]);
+                        file.Write(" {0:E5} ", this.zAxisNewPoints[index]);
                     }
 
                     m++;
@@ -92,11 +92,11 @@
                         {
                             if (m % 5 == 0)
                             {
-                                file.WriteLine(" {0:E5} ", this.newXSs[i_mini_Ft[k], i_mini_Mt[j], i_mini_Dm[i]]);
+                                file.WriteLine(" {0:E5} ", this.Interpolated3DValues[i_mini_Ft[k], i_mini_Mt[j], i_mini_Dm[i]]);
                             }
                             else
                             {
-                                file.Write(" {0:E5} ", this.newXSs[i_mini_Ft[k], i_mini_Mt[j], i_mini_Dm[i]]);
+                                file.Write(" {0:E5} ", this.Interpolated3DValues[i_mini_Ft[k], i_mini_Mt[j], i_mini_Dm[i]]);
                             }
 
                             m++;
@@ -113,7 +113,7 @@
                 int m = 1;
 
                 // Print the state parameters points
-                foreach (double digit in this.newFt)
+                foreach (double digit in this.xAxisNewPoints)
                 {
                     // add new line each 5-th element 
                     if (m % 5 == 0)
@@ -128,7 +128,7 @@
                     m++;
                 }
 
-                foreach (double digit in this.newMt)
+                foreach (double digit in this.yAxisNewPoints)
                 {
                     // add new line each 5-th element 
                     if (m % 5 == 0)
@@ -143,7 +143,7 @@
                     m++;
                 }
 
-                foreach (double digit in this.newDm)
+                foreach (double digit in this.zAxisNewPoints)
                 {
                     // add new line each 5-th element 
                     if (m % 5 == 0)
@@ -159,19 +159,19 @@
                 }
 
                 // printings of the new interpolated XS values...
-                for (int i = 0; i < this.newDm.Length; i++)
+                for (int i = 0; i < this.zAxisNewPoints.Length; i++)
                 {
-                    for (int j = 0; j < this.newMt.Length; j++)
+                    for (int j = 0; j < this.yAxisNewPoints.Length; j++)
                     {
-                        for (int k = 0; k < this.newFt.Length; k++)
+                        for (int k = 0; k < this.xAxisNewPoints.Length; k++)
                         {
                             if (m % 5 == 0)
                             {
-                                file.WriteLine(" {0:E5} ", this.newXSs[k, j, i]);
+                                file.WriteLine(" {0:E5} ", this.Interpolated3DValues[k, j, i]);
                             }
                             else
                             {
-                                file.Write(" {0:E5} ", this.newXSs[k, j, i]);
+                                file.Write(" {0:E5} ", this.Interpolated3DValues[k, j, i]);
                             }
 
                             m++;
