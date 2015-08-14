@@ -92,12 +92,12 @@
             string[] words;
             words = this.InputDataAsText.Split(delimiterChars);
 
-            Console.WriteLine("{0} words in text:", words.Length);
+            // Console.WriteLine("{0} words in text:", words.Length);
 
-            foreach (string s in words)
-            {
-                Console.WriteLine(s);
-            }
+            //foreach (string s in words)
+            //{
+            //    Console.WriteLine(s);
+            //}
 
             NumberStyles styles;
             styles = NumberStyles.AllowExponent | NumberStyles.AllowDecimalPoint;
@@ -125,7 +125,7 @@
             parametersSum = this.xAxisPoints.Length + this.yAxisPoints.Length + this.zAxisPoints.Length;
             double[] parameters = new double[parametersSum];
 
-            Console.WriteLine(" Sum of the parameters {0} ", parametersSum);
+            // Console.WriteLine(" Sum of the parameters {0} ", parametersSum);
 
             for (l = 0; l < parametersSum; l++)
             {
@@ -140,8 +140,8 @@
                     for (int i = 0; i < this.xAxisPoints.Length; i++)
                     {
                         this.Initial3DValues[i, j, k] = this.InputValues[l];
-                        Console.WriteLine("Iteration {4} - Value for points Ft {1}, Mt {2} and Dm {3}  is: '{0:E5}' ",
-                            this.Initial3DValues[i, j, k], i + 1, j + 1, k + 1, l - 15);
+                        //Console.WriteLine("Iteration {4} - Value for points Ft {1}, Mt {2} and Dm {3}  is: '{0:E5}' ",
+                        //    this.Initial3DValues[i, j, k], i + 1, j + 1, k + 1, l - 15);
                         l++;
                     }
                 }

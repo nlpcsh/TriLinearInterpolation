@@ -30,8 +30,6 @@
         {
             this.Interpolated3DValues = new double[this.xAxisNewPoints.Length, this.yAxisNewPoints.Length, this.zAxisNewPoints.Length];
 
-            Console.WriteLine(" Start to dictribute values: ");
-
             int interpolationCounter = 0;
             //// indexes of the coordinates
             int ix0, ix1, iy0, iy1, iz0, iz1;
@@ -59,7 +57,7 @@
                         iz0 = outputCoeffArray[0];
                         iz1 = outputCoeffArray[1];
 
-                        Console.WriteLine(" Interp. step {0}", interpolationCounter);
+                        // Console.WriteLine(" Interp. step {0}", interpolationCounter);
 
                         //// points to interpolate from:
                         x0 = this.xAxisPoints[ix0];
@@ -82,7 +80,7 @@
                         //// this.SecondInterpolationVariant(ix0, ix1, iy0, iy1, iz0, iz1, i, j, k);
 
                         //// printings to verify values and points
-                        this.PrintingOfPointsAndValues(ix0, ix1, iy0, iy1, iz0, iz1, x0, x1, y0, y1, z0, z1, x2, y2, z2, i, j, k);
+                        //this.PrintingOfPointsAndValues(ix0, ix1, iy0, iy1, iz0, iz1, x0, x1, y0, y1, z0, z1, x2, y2, z2, i, j, k);
 
                         interpolationCounter++;
                     }
@@ -122,11 +120,11 @@
             f0 = (f00 * Math.Abs(1 - mT_norm)) + (f10 * mT_norm);
             f1 = (f01 * Math.Abs(1 - mT_norm)) + (f11 * mT_norm);
 
-            Console.WriteLine(" dM_norm = {0}, mT_norm={1}, fT_norm,={2} ", dM_norm, mT_norm, fT_norm);
+            // Console.WriteLine(" dM_norm = {0}, mT_norm={1}, fT_norm,={2} ", dM_norm, mT_norm, fT_norm);
 
-            Console.WriteLine(" f00={0:E5}, f10={1:E5}, f01={2:E5}, f11={3:E5} ", f00, f10, f01, f11);
+            // Console.WriteLine(" f00={0:E5}, f10={1:E5}, f01={2:E5}, f11={3:E5} ", f00, f10, f01, f11);
 
-            Console.WriteLine(" f0={0:E5}, f1={1:E5}", f0, f1);
+            // Console.WriteLine(" f0={0:E5}, f1={1:E5}", f0, f1);
 
             //// final step of the 3-linear interpolation
             this.Interpolated3DValues[i, j, k] = (f0 * Math.Abs(1 - dM_norm)) + (f1 * dM_norm);
