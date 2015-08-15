@@ -2,7 +2,7 @@
 {
     using System;
 
-    internal class TriLinear
+    public class TriLinear
     {
         private double[] xAxisPoints;
 

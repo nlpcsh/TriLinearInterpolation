@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TriLinearTest", "TriLinearT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintState", "PrintState\PrintState.csproj", "{FF77C2A0-766D-4E92-BE7A-F82911BA3C4C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreeLinearInterpolation.Test", "ThreeLinearInterpolation.Test\ThreeLinearInterpolation.Test.csproj", "{40DC3B25-F4EF-4D20-9363-42759BFCB5F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{FF77C2A0-766D-4E92-BE7A-F82911BA3C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF77C2A0-766D-4E92-BE7A-F82911BA3C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF77C2A0-766D-4E92-BE7A-F82911BA3C4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40DC3B25-F4EF-4D20-9363-42759BFCB5F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40DC3B25-F4EF-4D20-9363-42759BFCB5F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40DC3B25-F4EF-4D20-9363-42759BFCB5F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40DC3B25-F4EF-4D20-9363-42759BFCB5F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
