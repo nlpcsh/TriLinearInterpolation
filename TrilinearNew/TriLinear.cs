@@ -2,25 +2,49 @@
 {
     using System;
 
-    internal class InterpolateXS
+    internal class TriLinear
     {
-        public InterpolateXS()
+        private double[] xAxisPoints;
+
+        private double[] yAxisPoints;
+
+        private double[] zAxisPoints;
+
+        // new parameters' values
+        private double[] xAxisNewPoints;
+
+        private double[] yAxisNewPoints;
+
+        private double[] zAxisNewPoints;
+
+        //private double[, ,] initial3DValues;
+
+        public TriLinear(double[] xAxisPoints, double[] yAxisPoints, double[] zAxisPoints, double[] xAxisNewPoints, double[] yAxisNewPoints, double[] zAxisNewPoints)
         {
+            this.xAxisPoints = xAxisPoints;
+            this.yAxisPoints = yAxisPoints;
+            this.zAxisPoints = zAxisPoints;
+
+            this.xAxisNewPoints = xAxisNewPoints;
+            this.yAxisNewPoints = yAxisNewPoints;
+            this.zAxisNewPoints = zAxisNewPoints;
+
+            //this.initial3DValues = initial3DValues;
         }
 
         // Initial mesh of parameters' values
-        public double[] xAxisPoints { get; set; }
+        //public double[] xAxisPoints { get; set; }
 
-        public double[] yAxisPoints { get; set; }
+        //public double[] yAxisPoints { get; set; }
 
-        public double[] zAxisPoints { get; set; }
+        //public double[] zAxisPoints { get; set; }
 
-        // new parameters' values
-        public double[] xAxisNewPoints { get; set; }
+        //// new parameters' values
+        //public double[] xAxisNewPoints { get; set; }
 
-        public double[] yAxisNewPoints { get; set; }
+        //public double[] yAxisNewPoints { get; set; }
 
-        public double[] zAxisNewPoints { get; set; }
+        //public double[] zAxisNewPoints { get; set; }
 
         public double[, ,] Initial3DValues { get; set; }
 

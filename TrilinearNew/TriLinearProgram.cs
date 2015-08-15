@@ -5,19 +5,22 @@
         public static void Main()
         {
             var inputReader = new InputReader();
-            var interpolator = new InterpolateXS();
             var dataInitializer = new DataInitializer();
+            var interpolator = new TriLinear(
+                dataInitializer.XAxisPoints, dataInitializer.YAxisPoints, dataInitializer.ZAxisPoints,
+                dataInitializer.XAxisNewPoints, dataInitializer.YAxisNewPoints, dataInitializer.ZAxisNewPoints 
+                );
             var outputToFile = new OutputToFile();
 
             // Initial Mesh Values
-            interpolator.xAxisPoints = dataInitializer.XAxisPoints;
-            interpolator.yAxisPoints = dataInitializer.YAxisPoints;
-            interpolator.zAxisPoints = dataInitializer.ZAxisPoints;
+            //interpolator.xAxisPoints = dataInitializer.XAxisPoints;
+            //interpolator.yAxisPoints = dataInitializer.YAxisPoints;
+            //interpolator.zAxisPoints = dataInitializer.ZAxisPoints;
 
             // New Mesh Values
-            interpolator.xAxisNewPoints = dataInitializer.XAxisNewPoints;
-            interpolator.yAxisNewPoints = dataInitializer.YAxisNewPoints;
-            interpolator.zAxisNewPoints = dataInitializer.ZAxisNewPoints;
+            //interpolator.xAxisNewPoints = dataInitializer.XAxisNewPoints;
+            //interpolator.yAxisNewPoints = dataInitializer.YAxisNewPoints;
+            //interpolator.zAxisNewPoints = dataInitializer.ZAxisNewPoints;
 
             outputToFile.xAxisNewPoints = dataInitializer.XAxisNewPoints;
             outputToFile.yAxisNewPoints = dataInitializer.YAxisNewPoints;
