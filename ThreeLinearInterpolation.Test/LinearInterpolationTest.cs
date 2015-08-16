@@ -194,5 +194,89 @@
 
             Assert.AreEqual(calculatedFunctionValue, interpolator.Interpolated3DValues[0, 0, 0], "Problem with interpolated point in ALL directions!");
         }
+
+        [TestMethod]
+        public void XPointOutsideTheInitialRange_SholdBeExtrapolated()
+        {
+            double[] XAxisNewPoints = new double[1] { 15 };
+            double[] YAxisNewPoints = new double[1] { 5 };
+            double[] ZAxisNewPoints = new double[1] { 5 };
+
+            var interpolator = new TriLinear(
+                this.XAxisPoints, this.YAxisPoints, this.ZAxisPoints,
+                XAxisNewPoints, YAxisNewPoints, ZAxisNewPoints
+                );
+
+            interpolator.Initial3DValues = this.Initial3DValues;
+
+            interpolator.LinearInterpolation();
+
+            double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
+
+            Assert.AreEqual(calculatedFunctionValue, interpolator.Interpolated3DValues[0, 0, 0], "Problem with extrapolated point in X direction!");
+        }
+
+        [TestMethod]
+        public void YPointOutsideTheInitialRange_SholdBeExtrapolated()
+        {
+            double[] XAxisNewPoints = new double[1] { 5 };
+            double[] YAxisNewPoints = new double[1] { 15 };
+            double[] ZAxisNewPoints = new double[1] { 5 };
+
+            var interpolator = new TriLinear(
+                this.XAxisPoints, this.YAxisPoints, this.ZAxisPoints,
+                XAxisNewPoints, YAxisNewPoints, ZAxisNewPoints
+                );
+
+            interpolator.Initial3DValues = this.Initial3DValues;
+
+            interpolator.LinearInterpolation();
+
+            double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
+
+            Assert.AreEqual(calculatedFunctionValue, interpolator.Interpolated3DValues[0, 0, 0], "Problem with extrapolated point in Y direction!");
+        }
+
+        [TestMethod]
+        public void ZPointOutsideTheInitialRange_SholdBeExtrapolated()
+        {
+            double[] XAxisNewPoints = new double[1] { 5 };
+            double[] YAxisNewPoints = new double[1] { 5 };
+            double[] ZAxisNewPoints = new double[1] { 15 };
+
+            var interpolator = new TriLinear(
+                this.XAxisPoints, this.YAxisPoints, this.ZAxisPoints,
+                XAxisNewPoints, YAxisNewPoints, ZAxisNewPoints
+                );
+
+            interpolator.Initial3DValues = this.Initial3DValues;
+
+            interpolator.LinearInterpolation();
+
+            double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
+
+            Assert.AreEqual(calculatedFunctionValue, interpolator.Interpolated3DValues[0, 0, 0], "Problem with extrapolated point in Z direction!");
+        }
+
+        [TestMethod]
+        public void AllPointsOutsideTheInitialRange_SholdBeExtrapolated()
+        {
+            double[] XAxisNewPoints = new double[1] { 15 };
+            double[] YAxisNewPoints = new double[1] { 15 };
+            double[] ZAxisNewPoints = new double[1] { 15 };
+
+            var interpolator = new TriLinear(
+                this.XAxisPoints, this.YAxisPoints, this.ZAxisPoints,
+                XAxisNewPoints, YAxisNewPoints, ZAxisNewPoints
+                );
+
+            interpolator.Initial3DValues = this.Initial3DValues;
+
+            interpolator.LinearInterpolation();
+
+            double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
+
+            Assert.AreEqual(calculatedFunctionValue, interpolator.Interpolated3DValues[0, 0, 0], "Problem with extrapolated points in ALL direction!");
+        }
     }
 }

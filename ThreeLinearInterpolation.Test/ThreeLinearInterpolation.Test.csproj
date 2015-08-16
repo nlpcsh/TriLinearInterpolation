@@ -54,7 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TrilinearNew\ThreeLinearInterpolation.csproj">
+    <ProjectReference Include="..\ThreeLinearInterpolation\ThreeLinearInterpolation.csproj">
       <Project>{8dd04a37-70fc-409b-b25c-2c4c60e6c248}</Project>
       <Name>ThreeLinearInterpolation</Name>
     </ProjectReference>

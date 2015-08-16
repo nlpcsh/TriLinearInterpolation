@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreeLinearInterpolation", "TrilinearNew\ThreeLinearInterpolation.csproj", "{8DD04A37-70FC-409B-B25C-2C4C60E6C248}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreeLinearInterpolation", "ThreeLinearInterpolation\ThreeLinearInterpolation.csproj", "{8DD04A37-70FC-409B-B25C-2C4C60E6C248}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreeLinearInterpolation.Test", "ThreeLinearInterpolation.Test\ThreeLinearInterpolation.Test.csproj", "{40DC3B25-F4EF-4D20-9363-42759BFCB5F1}"
 EndProject

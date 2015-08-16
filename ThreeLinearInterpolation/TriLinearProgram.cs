@@ -12,16 +12,6 @@
                 );
             var outputToFile = new OutputToFile();
 
-            // Initial Mesh Values
-            //interpolator.xAxisPoints = dataInitializer.XAxisPoints;
-            //interpolator.yAxisPoints = dataInitializer.YAxisPoints;
-            //interpolator.zAxisPoints = dataInitializer.ZAxisPoints;
-
-            // New Mesh Values
-            //interpolator.xAxisNewPoints = dataInitializer.XAxisNewPoints;
-            //interpolator.yAxisNewPoints = dataInitializer.YAxisNewPoints;
-            //interpolator.zAxisNewPoints = dataInitializer.ZAxisNewPoints;
-
             outputToFile.xAxisNewPoints = dataInitializer.XAxisNewPoints;
             outputToFile.yAxisNewPoints = dataInitializer.YAxisNewPoints;
             outputToFile.zAxisNewPoints = dataInitializer.ZAxisNewPoints;

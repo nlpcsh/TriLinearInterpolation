@@ -1,4 +1,0 @@
-Gr   Difusion     Absorption    Scattering
-
-1   1.07225E+00   5.63070E-03    2.23912E-02 
-2   5.41455E-01   1.55156E-01 
