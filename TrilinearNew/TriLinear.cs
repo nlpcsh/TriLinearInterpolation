@@ -17,8 +17,6 @@
 
         private double[] zAxisNewPoints;
 
-        //private double[, ,] initial3DValues;
-
         public TriLinear(double[] xAxisPoints, double[] yAxisPoints, double[] zAxisPoints, double[] xAxisNewPoints, double[] yAxisNewPoints, double[] zAxisNewPoints)
         {
             this.xAxisPoints = xAxisPoints;
@@ -28,8 +26,6 @@
             this.xAxisNewPoints = xAxisNewPoints;
             this.yAxisNewPoints = yAxisNewPoints;
             this.zAxisNewPoints = zAxisNewPoints;
-
-            //this.initial3DValues = initial3DValues;
         }
 
         // Initial mesh of parameters' values
