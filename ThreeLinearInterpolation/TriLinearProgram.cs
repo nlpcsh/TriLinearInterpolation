@@ -28,7 +28,7 @@
                 //// initial values to interpolate from
                 interpolator.Initial3DValues = dataInitializer.Initial3DValues;
 
-                interpolator.LinearInterpolation();
+                interpolator.LinearInterpolationOf3DDataInput();
 
                 //// print real set of XS
                 outputToFile.Interpolated3DValues = interpolator.Interpolated3DValues;

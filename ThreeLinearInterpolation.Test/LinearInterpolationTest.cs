@@ -41,7 +41,7 @@
 
             interpolator.Initial3DValues = this.Initial3DValues;
 
-            interpolator.LinearInterpolation();
+            interpolator.LinearInterpolationOf3DDataInput();
 
             double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
 
@@ -62,7 +62,7 @@
 
             interpolator.Initial3DValues = this.Initial3DValues;
 
-            interpolator.LinearInterpolation();
+            interpolator.LinearInterpolationOf3DDataInput();
 
             double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
 
@@ -83,7 +83,7 @@
 
             interpolator.Initial3DValues = this.Initial3DValues;
 
-            interpolator.LinearInterpolation();
+            interpolator.LinearInterpolationOf3DDataInput();
 
             double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
 
@@ -104,7 +104,7 @@
 
             interpolator.Initial3DValues = this.Initial3DValues;
 
-            interpolator.LinearInterpolation();
+            interpolator.LinearInterpolationOf3DDataInput();
 
             double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
 
@@ -125,7 +125,7 @@
 
             interpolator.Initial3DValues = this.Initial3DValues;
 
-            interpolator.LinearInterpolation();
+            interpolator.LinearInterpolationOf3DDataInput();
 
             double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
 
@@ -146,7 +146,7 @@
 
             interpolator.Initial3DValues = this.Initial3DValues;
 
-            interpolator.LinearInterpolation();
+            interpolator.LinearInterpolationOf3DDataInput();
 
             double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
 
@@ -167,7 +167,7 @@
 
             interpolator.Initial3DValues = this.Initial3DValues;
 
-            interpolator.LinearInterpolation();
+            interpolator.LinearInterpolationOf3DDataInput();
 
             double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
 
@@ -188,7 +188,7 @@
 
             interpolator.Initial3DValues = this.Initial3DValues;
 
-            interpolator.LinearInterpolation();
+            interpolator.LinearInterpolationOf3DDataInput();
 
             double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
 
@@ -209,7 +209,7 @@
 
             interpolator.Initial3DValues = this.Initial3DValues;
 
-            interpolator.LinearInterpolation();
+            interpolator.LinearInterpolationOf3DDataInput();
 
             double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
 
@@ -230,7 +230,7 @@
 
             interpolator.Initial3DValues = this.Initial3DValues;
 
-            interpolator.LinearInterpolation();
+            interpolator.LinearInterpolationOf3DDataInput();
 
             double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
 
@@ -251,7 +251,7 @@
 
             interpolator.Initial3DValues = this.Initial3DValues;
 
-            interpolator.LinearInterpolation();
+            interpolator.LinearInterpolationOf3DDataInput();
 
             double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
 
@@ -272,7 +272,7 @@
 
             interpolator.Initial3DValues = this.Initial3DValues;
 
-            interpolator.LinearInterpolation();
+            interpolator.LinearInterpolationOf3DDataInput();
 
             double calculatedFunctionValue = (a * XAxisNewPoints[0]) + (b * YAxisNewPoints[0]) + (c * ZAxisNewPoints[0]);
 

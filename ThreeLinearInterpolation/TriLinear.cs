@@ -46,7 +46,7 @@
 
         public double[, ,] Interpolated3DValues { get; set; }
 
-        public void LinearInterpolation()
+        public void LinearInterpolationOf3DDataInput()
         {
             this.Interpolated3DValues = new double[this.xAxisNewPoints.Length, this.yAxisNewPoints.Length, this.zAxisNewPoints.Length];
 
@@ -94,7 +94,7 @@
                         z2 = this.zAxisNewPoints[k];
 
                         //// FIRST VARIANT OF INTERPOLATION
-                        this.FirstInterpolationVariant(ix0, ix1, iy0, iy1, iz0, iz1, x0, x1, y0, y1, z0, z1, x2, y2, z2, i, j, k);
+                        this.FirstInterpolationMethodOf1PointIn3D(ix0, ix1, iy0, iy1, iz0, iz1, x0, x1, y0, y1, z0, z1, x2, y2, z2, i, j, k);
 
                         //// SECOND VARIANT OF INTERPOLATION
                         //// this.SecondInterpolationVariant(ix0, ix1, iy0, iy1, iz0, iz1, i, j, k);
@@ -121,7 +121,7 @@
             Console.WriteLine(" Coordinates x2={0}, y2={1}, z2={2}  -> INTERPOLATED VALUE: '{3:E5}' ", x2, y2, z2, this.Interpolated3DValues[i, j, k]);
         }
 
-        private void SecondInterpolationVariant(int ix0, int ix1, int iy0, int iy1, int iz0, int iz1, int i, int j, int k)
+        private void SecondInterpolationMethodOf1PointIn3D(int ix0, int ix1, int iy0, int iy1, int iz0, int iz1, int i, int j, int k)
         {
             double fT_norm, mT_norm, dM_norm, f00, f10, f01, f11, f0, f1;
             //// set the coordinates of the new interpolated value
@@ -150,7 +150,7 @@
             this.Interpolated3DValues[i, j, k] = (f0 * Math.Abs(1 - dM_norm)) + (f1 * dM_norm);
         }
 
-        private void FirstInterpolationVariant(int ix0, int ix1, int iy0, int iy1, int iz0, int iz1, double x0, double x1, double y0, double y1, double z0, double z1, double x2, double y2, double z2, int i, int j, int k)
+        private void FirstInterpolationMethodOf1PointIn3D(int ix0, int ix1, int iy0, int iy1, int iz0, int iz1, double x0, double x1, double y0, double y1, double z0, double z1, double x2, double y2, double z2, int i, int j, int k)
         {
             //// Normalized volumes:
             double Na, Nb, Nc, Nd, Ne, Nf, Ng, Nh;
